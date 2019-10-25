@@ -1,4 +1,5 @@
 #include "common.h"
+#include <time.h>
 
 /* The main program.  Tracks the position of the X pointer, and warps it at
    screen edges, according to the function 'map' defined in another file. */
@@ -8,6 +9,10 @@ int main() {
     Display *dpy = XOpenDisplay(NULL);
     Window root = DefaultRootWindow(dpy);
     map_init(dpy);
+
+    struct timespec tim, tim2;
+    tim.tv_sec  = 0;
+    tim.tv_nsec = 10000000L;
 
     // Get the XInput opcode.
     // (Variables starting with an underscore are not used.)
@@ -60,5 +65,6 @@ int main() {
             // Clean up after XGetEventData.
             XFreeEventData(dpy, &event.xcookie);
         }
+        nanosleep(&tim , &tim2);
     }
 }
