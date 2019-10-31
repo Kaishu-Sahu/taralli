@@ -11,18 +11,22 @@ void map_init(Display *dpy) {
     height = DisplayHeight(dpy, screen);
 }
 
-void map(int *x, int *y) {
+/*void map(int *x, int *y) {
     WRAP(x, 0, width-2);
     WRAP(x, width-1, 1);
-    WRAP(y, 0, 0);
-    if (*x <= (width-100)) {
-	WRAP(y, height-1, 1);
+    if (*y == 0) {
+      if(*x <= 30 || *x >= (width-50)) {
+        WRAP(y, 0, height-2);
+      }
     }
-}
+    if (*x <= (width-150)) {
+	     WRAP(y, height-1, 1);
+    }
+}*/
 
-/*void map(int *x, int *y) {
+void map(int *x, int *y) {
     WRAP(x, 0, width-2);
     WRAP(x, width-1, 1);
     WRAP(y, 0, height-2);
     WRAP(y, height-1, 1);
-}*/
+}

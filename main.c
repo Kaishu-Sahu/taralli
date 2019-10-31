@@ -55,7 +55,7 @@ int main() {
                     new_x = old_x;
                     new_y = old_y;
                     map(&new_x, &new_y);
-                    if ((new_x != old_x) || (new_y != old_y)) {
+                    if (((new_x != old_x) || (new_y != old_y)) && _mask == (1<<0)) {
                         XWarpPointer(dpy, None, root, 0, 0, 0, 0,
                                      new_x, new_y);
                     }
