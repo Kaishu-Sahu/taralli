@@ -9,11 +9,7 @@ int main() {
     Display *dpy = XOpenDisplay(NULL);
     Window root = DefaultRootWindow(dpy);
     map_init(dpy);
-
-    struct timespec tim, tim2;
-    tim.tv_sec  = 0;
-    tim.tv_nsec = 10000000L;
-
+    
     // Get the XInput opcode.
     // (Variables starting with an underscore are not used.)
     int xi_opcode, _first_event, _first_error;
@@ -37,7 +33,10 @@ int main() {
 
     // Receive X events forever.
     while (1) {
+	// puts("while loop iterated");
         XEvent event;
+
+        //This is blocking which prevent the loop to run forever
         XNextEvent(dpy, &event);
         if ((event.xcookie.type == GenericEvent) &&
             (event.xcookie.extension == xi_opcode) &&
@@ -52,10 +51,18 @@ int main() {
                 unsigned int _mask;
                 if (XQueryPointer(dpy, root, &_root, &_child, &old_x, &old_y,
                                   &_win_x, &_win_y, &_mask)) {
+                                
                     new_x = old_x;
                     new_y = old_y;
                     map(&new_x, &new_y);
-                    if (((new_x != old_x) || (new_y != old_y)) && _mask == (1<<0)) {
+                    
+                    // if (_mask == ShiftMask) {
+			// puts("shift pressed"); 
+		    // }
+		    // printf("%d\n", _mask);
+		    // printf("%d\n", ShiftMask);				
+
+                    if ((_mask == 1 || _mask == 17) && ((new_x != old_x) || (new_y != old_y)) ) {
                         XWarpPointer(dpy, None, root, 0, 0, 0, 0,
                                      new_x, new_y);
                     }
@@ -65,6 +72,5 @@ int main() {
             // Clean up after XGetEventData.
             XFreeEventData(dpy, &event.xcookie);
         }
-        nanosleep(&tim , &tim2);
     }
 }

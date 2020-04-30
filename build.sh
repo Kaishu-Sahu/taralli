@@ -13,6 +13,7 @@ fi
 
 set -xe
 
-${CC:-cc} -O2 -Wall -std=gnu99 -pedantic             \
-  -I/usr/local/include -L/usr/local/lib -lX11 -lXi \
-  -o taralli_$1 main.c map_$1.c
+${CC:-cc} -O2 -Wall -std=gnu99 -pedantic            \
+  -I/usr/include -L/usr/lib/x86_64-linux-gnu \
+  -o taralli_$1 main.c map_$1.c \
+ -lX11 -lXi
