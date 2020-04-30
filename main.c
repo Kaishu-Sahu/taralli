@@ -1,5 +1,4 @@
 #include "common.h"
-#include <time.h>
 
 /* The main program.  Tracks the position of the X pointer, and warps it at
    screen edges, according to the function 'map' defined in another file. */
